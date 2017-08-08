@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head> 
+<meta charset="utf-8" />
+<style>
+canvas 
+{
+	border: 1px solid black;
+	background:url(des2.png);
+}
+</style>
+
+<script type="text/javascript">
+
+var source2=['5.png','6.png','7.png','8.png','9.png','10.png','g9.png','g10.png','g11.png','g12.png','g13.png','g14.png','g15.png','g16.png','g17.png','g18.png','g19.png','g20.png','g21.png','g22.png','g23.png','g23.png','g23.png','g23.png','g23.png','g23.png','g23.png'];
+var x2=[60,60,60,60,60,60,310,315,320,324,324,326,328,330,340,380,400,420,430,440,450,450,450,450,450,450,450];
+var y2=[190,190,190,190,190,190,405,395,385,375,375,375,375,375,380,390,400,410,425,425,425,425,425,425,425,425,425];
+
+var source3=['g3.png','g4.png','g5.png','g6.png','g7.png','g8.png','g9.png','g10.png','g11.png','g12.png','g13.png','g14.png','g15.png','g16.png','g17.png','g18.png','g19.png','g20.png','g21.png','g22.png','g11.png','g12.png','g12.png','g12.png'];
+var x3=[285,285,285,285,290,300,310,315,320,324,324,326,328,330,340,380,400,420,430,440,450,450,450,450,450];
+var y3=[425,425,425,425,425,415,405,395,385,375,375,375,375,375,380,390,400,410,425,425,425,425,425,425,425];
+
+var source1=['5.png','6.png','7.png','8.png','9.png','10.png','11.png','12.png','13.png','14.png','15.png','16.png','17.png','18.png','19.png','20.png','21.png','22.png','23.png','24.png','25.png','26.png','27.png','28.png','29.png','30.png','31.png','32.png','33.png','34.png','36.png','38.png','39.png','40.png','41.png','42.png','43.png','44.png','45.png','46.png'];
+var x1=[60,60,28,60,    55,60,80,45,    35,60,40,65,   50,80,90,85,    90,130,130,145,  150,150,160,185,  	220,270,270,250,      260,300,280,300,        320,270,250,260,   250,225,250,250,220];
+var y1=[190,190,202,239,   195,250,200,180,    150,140,160,140,  120,90,45,60,  25,30,5,-10,  -20,-30,-50,5,	-70,-100,-120,-100,   -120,-100,-90,-60,     -80,60,30,40,     50,60,40,60,90];
+
+
+
+var middleimage=['g1.png','g2.png','g2.png','g3.png','g3.png','g3.png'];
+
+var middlex=[285,285,285,285,285,285,285];
+var middley=[425,425,425,425,425,425,425];
+
+
+var imgm;
+var flag1,flag2,flag3;
+var life=3;
+
+var counter=0;
+var i=0;
+var inc=0;
+
+var canvas;
+var ctx;
+
+
+var si1,
+	si2,
+	si3;
+
+var olddat,
+	newdat,
+	time=5;
+
+
+var data;
+
+
+var img,
+	img1,
+	img2,
+	img3;
+
+
+var fsec,
+	lsec;
+
+
+var music;
+var musr=1;
+
+
+var starttimer,
+	middletimer;
+	
+var life;
+var sco=0;
+var pra=3;
+var score;
+
+
+
+window.onload=function()
+{
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+
+ctx.clearRect(0,0,800,580);
+//localStorage.setItem("pra",3);
+//localStorage.setItem("sco",0);
+
+ctx.fillStyle = '#f00';
+ctx.font = 'italic bold 28px sans-serif';
+ctx.textBaseline = 'bottom';
+var x=localStorage.getItem("sco");
+ctx.fillText("Score:", 600, 40);
+ctx.fillText(x, 700, 40);
+var y=localStorage.getItem("pra");
+ctx.fillText("Lives:", 15, 40);
+ctx.fillText(y, 115, 40);
+
+}
+
+
+
+function draw1() {
+inc+=1;
+main();
+}
+
+
+
+function main() {
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+//ctx.clearRect(0,(window.innerHeight*10)/100,window.innerWidth-(window.innerWidth*10)/100,window.innerHeight-(window.innerHeight*10)/100);
+switch(inc)
+{
+case 1:
+olddat=new Date();
+middletimer=setInterval('gamemiddle()',300);
+break;
+
+case 2:
+
+newdat=new Date();
+if(newdat.getMinutes()>olddat.getMinutes())
+{
+time=60-olddat.getSeconds()+newdat.getSeconds();
+}
+else
+{
+time=(newdat.getSeconds()-olddat.getSeconds());
+}
+score=localStorage.getItem("sco");
+if(time<2)
+{
+data=1;
+score=parseInt(score)+0;
+}
+else if(time==2)
+{
+data=2;
+score=parseInt(score)+100;
+}
+else if(time==3)
+{
+data=2;
+score=parseInt(score)+100;
+
+}
+else if(time==4)
+{
+data=2;
+score=parseInt(score)+200;
+
+}
+else if(time==5)
+{
+data=2;
+score=parseInt(score)+200;
+
+}
+else if(time==6)
+{
+data=2;
+score=parseInt(score)+100;
+
+}
+else if(time>6)
+{
+data=3;
+score=parseInt(score)+0;
+}
+
+
+localStorage.setItem("sco",score);
+
+switch(data)
+{
+case 1:
+life--;
+si1=setInterval('drawperson1()',500);
+
+break;
+case 2:
+si2=setInterval('drawperson2()',150);
+
+break;
+case 3:
+life--;
+si3=setInterval('drawperson3()',150); 
+
+}
+
+
+}
+
+}
+
+
+
+function showFillText() {
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+ctx.fillStyle = '#f00';
+ctx.font = 'italic bold 30px sans-serif';
+ctx.textBaseline = 'bottom';
+var x="canvas"
+ctx.fillText(x, 700, 30);
+}
+
+
+
+function Clear_text() {
+ctx.clearRect(1, 1, 800, 300);
+} 
+
+
+
+
+
+
+function gamemiddle(){
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+
+	imgm=new Image();
+	//imgm.src=middleimage[4];
+	imgm.src="5.png";
+	
+	imgm.onload=function()
+	{
+		ctx.drawImage(imgm,60,190,400,640);
+	}
+	ctx.clearRect(0,(window.innerHeight*10)/100,window.innerWidth-(window.innerWidth*10)/100,window.innerHeight-(window.innerHeight*10)/100);
+	
+	i++;
+	if(i>5)
+	{
+	clearInterval(middletimer);	
+	}
+}
+
+
+/*function gamestart(){
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+
+	img=new Image();
+	img.src=startimage[i];
+	img.onload=function()
+	{
+		ctx.drawImage(img,startx[i],starty[i],50,80);
+	}
+	ctx.clearRect(0,0,800,580);
+	
+	i++;
+	if(i>23)
+	{
+	clearInterval(starttimer);	
+	}
+}*/
+
+function drawperson1(){
+
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+
+
+img1=new Image();
+img1.src=source1[counter];
+img1.onload=function()
+{
+ ctx.drawImage(img1,x1[counter],y1[counter],400,640);
+}
+
+counter++;
+if(counter>50)
+{
+clearInterval(si1);
+flag1=1;
+}
+//ctx.clearRect(0,(window.innerHeight*10)/100,window.innerWidth-(window.innerWidth*10)/100,window.innerHeight-(window.innerHeight*10)/100);
+if(flag1==1)
+{
+life=localStorage.getItem("pra");
+//document.write(life);
+life--;
+localStorage.setItem("pra",life);
+//document.write(life);
+if(life==0)
+{
+	localStorage.setItem("pra",3);
+	//lifeb=pra;
+	life=localStorage.getItem("pra");
+	localStorage.setItem("sco",0);
+	//score=sco;
+	score=localStorage.getItem("sco");
+	//window.location="gameover.html";
+}
+else
+{
+//window.location="level1afailed.html";
+}
+}
+}
+
+
+function game() {
+
+//starttimer=setInterval('gamestart()',150);
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+ctx.clearRect(0,0,800,580);
+localStorage.setItem("pra",3);
+localStorage.setItem("sco",0);
+
+ctx.fillStyle = '#f00';
+ctx.font = 'italic bold 28px sans-serif';
+ctx.textBaseline = 'bottom';
+var x=localStorage.getItem("sco");
+ctx.fillText("Score:", 600, 2);
+ctx.fillText(x, 700, 2);
+var y=localStorage.getItem("pra");
+ctx.fillText("Lives:", 2, 2);
+ctx.fillText(y, 100, 2);
+//document.write("sdfsf");
+}
+
+function drawperson2(){
+
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+
+
+img2=new Image();
+img2.src=source2[counter];
+img2.onload=function()
+{
+ ctx.drawImage(img2,x2[counter],y2[counter],50,80);
+
+}
+
+counter++;
+if(counter>50)
+{
+clearInterval(si2);
+flag2=1;
+}
+ctx.clearRect(0,(window.innerHeight*10)/100,window.innerWidth-(window.innerWidth*10)/100,window.innerHeight-(window.innerHeight*10)/100);
+if(flag2==1)
+{
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+ctx.clearRect(0, 0, 800, 300);
+ctx.fillStyle = '#f00';
+ctx.font = 'italic bold 28px sans-serif';
+ctx.textBaseline = 'bottom';
+var x=localStorage.getItem("sco");
+ctx.fillText("Score:", 600, 40);
+ctx.fillText(x, 700, 40);
+window.location="level1asuccess.html";
+
+}
+}
+
+function drawperson3(){
+
+canvas=document.getElementById("Mycanvas");
+ctx = canvas.getContext("2d");
+
+img3=new Image();
+img3.src=source3[counter];
+img3.onload=function()
+{
+ ctx.drawImage(img3,x3[counter],y3[counter],50,80);
+}
+counter++;
+if(counter>50)
+{
+clearInterval(si3);
+flag3=1;
+
+}
+ctx.clearRect(0,(window.innerHeight*10)/100,window.innerWidth-(window.innerWidth*10)/100,window.innerHeight-(window.innerHeight*10)/100);
+if(flag3==1)
+{
+life=localStorage.getItem("pra");
+//document.write(life);
+life--;
+localStorage.setItem("pra",life);
+//document.write(life);
+if(life==0)
+{
+	localStorage.setItem("pra",3);
+	//lifeb=pra;
+	life=localStorage.getItem("pra");
+	localStorage.setItem("sco",0);
+	//score=sco;
+	score=localStorage.getItem("sco");
+	window.location="gameover.html";
+}
+else
+{
+window.location="level1afailed.html";
+}
+}
+}
+
+</script>
+<body>
+
+
+<canvas width="800" height="580" id="Mycanvas" ></canvas>
+<div style="position: absolute; left: 650px; top: 500px;"><img src="tap.png" onclick="draw1()"></div>
+<div style="position: absolute; left: 10px; top: 500px;"><a href="play.html"><img src="home.png"></a></div>
+
+
+</body>
+</html>
+
